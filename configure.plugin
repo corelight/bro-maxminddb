@@ -6,7 +6,7 @@
 plugin_usage()
 {
     cat <<EOF
-    --with-maxminddb=DIR          Path to libmaxminddb root dir.
+    --with-maxminddb=DIR       Path to libmaxminddb root dir.
 EOF
 }
 
