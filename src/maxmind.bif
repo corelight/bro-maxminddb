@@ -95,8 +95,31 @@ function get_record%(result: opaque of maxmind_result, field: string_vec, rec: a
 				for (entry_data_list = entry_data_list->next;
 				     size && entry_data_list; size--)
 					{
-					string key = string((char *)entry_data_list->entry_data.utf8_string, 
-					                    entry_data_list->entry_data.data_size);
+					string key;
+					switch (entry_data_list->entry_data.type) 
+						{
+						case MMDB_DATA_TYPE_DOUBLE:
+							key = std::to_string(entry_data_list->entry_data.double_value);
+							break;
+
+						case MMDB_DATA_TYPE_UINT16:
+							key = std::to_string(entry_data_list->entry_data.uint16);
+							break;
+
+						case MMDB_DATA_TYPE_UTF8_STRING:
+							key = string((char *)entry_data_list->entry_data.utf8_string, 
+							             entry_data_list->entry_data.data_size);
+							break;
+
+						case MMDB_DATA_TYPE_BYTES:
+							key = string((char *)entry_data_list->entry_data.bytes, 
+						                 entry_data_list->entry_data.data_size);
+
+							break;
+						
+						default:
+							printf("unknown %d!\n", entry_data_list->entry_data.type);
+						}
 					printf("key: %s\n", key.c_str());
 					entry_data_list = entry_data_list->next;
 					}

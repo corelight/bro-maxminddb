@@ -1,7 +1,8 @@
 
 cmake_minimum_required(VERSION 2.8)
 
-project(Plugin)
+project(BroPluginMaxmindDB)
+include(BroPlugin)
 
 find_package(OpenSSL)
 include_directories(${OPENSSL_INCLUDE_DIR})
@@ -9,7 +10,6 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 include(cmake/FindMaxMindDB.cmake)
 
 if ( LIBMAXMINDDB_FOUND )
-    include(BroPlugin)
     include_directories(BEFORE ${LIBMAXMINDDB_INCLUDE_DIR})
     bro_plugin_begin(Bro MaxMind)
     bro_plugin_cc(src/Plugin.cc src/OpaqueMaxMind.cc)
